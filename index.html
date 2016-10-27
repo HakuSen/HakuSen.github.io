@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>weather_pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_dlvmdcew8ftuik9.css">
+  <style>
+    body,html{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        background:#fff url('./img/Moon.jpg');
+        background-color:rgba(0,0,0,0.2);
+        background-size:cover;
+        color:#fff;
+      }
+
+      .weather{
+        text-align: center;
+        height: 20rem;
+        color:#fff;
+        display: flex;
+        -webkit-display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        position: relative;
+      }
+      .weather_ico{
+        position: absolute;
+        top: .5em;
+        left: 1em;
+      }
+      .weather_ico i{
+        font-size: 5rem;
+        animation:mymove 2s infinite;
+        animation-direction:alternate;
+      }
+      @keyframes mymove
+        {
+        0%   {opacity: .4;}
+        100% {opacity: 1;}
+        }
+      .cur_state .state{
+            font-size: xx-large;
+          }
+      .cur_state .temperature{
+            font-size: 3.5em;
+            text-indent:.5em;
+          }
+      .cur_state .state_forecast{
+        margin-top: 2rem;
+      }
+      .cur_day{
+        border-bottom: 1px solid #fff;
+        padding-bottom: 1rem;
+      }
+      .cur_day .right{
+        float: right;
+      }
+      .cur_day .today{
+        margin:0 1rem;
+        color: #ffea60;
+      }
+      .forecast ul{
+          margin:0;
+          }
+      .forecast ul li{
+          width:100%;
+          display: block;
+          height:3.5rem;
+          line-height:3.5rem;
+        }
+        .forecast ul li:first-child{
+          border-bottom: 1px solid #fff;
+        }
+      .week{
+          float:left;
+          margin-left: 1rem;
+        }
+      .forecastweh_state{
+        margin-left: 7rem;
+      }
+      .rweather{
+          margin-right: 1rem;
+          float:right;
+        }
+      .rweather .min_tem{
+        color: #cecece;
+      }
+      h1, h2,h3 {
+        font-weight: normal;
+        margin:0;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      a {
+        color: #42b983;
+      }
+  </style>
+</head>
+
+<body>
+  <div class="content" id="app">
+    <div class="weather">
+      <div class="weather_ico">
+        <i class="iconfont {{ skyVal(currentWth.skycon)[1] }}" id="iconfont"></i>
+      </div>
+      <div class="cur_state">
+        <h3 class="state" id="state">{{ skyVal(currentWth.skycon)[0] }}</h3>
+        <p id="address">--</p>
+        <h1 class="temperature">{{ currentWth.temperature }}°</h1>
+        <p class="state_forecast">{{ forecastWth.description }}</p>
+      </div>
+    </div>
+
+    <div class="forecast">
+      <ul>
+        <li v-for="item in forecastWeek">
+          <span class="week">{{ getWeek(item[1]) }}</span>
+          <span class="forecastweh_state"><i class="iconfont {{ skyVal(item[0])[1] }}" id="ico"></i></span>
+          <div class="rweather">
+            <span>{{ item[2] }}°</span>
+            <span class="min_tem">{{ item[3] }}°</span>
+          </div>
+          
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="//cdn.bootcss.com/vue/1.0.28/vue.min.js"></script>
+  <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=m5VfddjUAHr0U80TwMz5GBt27co0BEmY&callback=init"></script>
+  <script type="text/javascript" src="dist/index.js"></script>
+</body>
+
+</html>
