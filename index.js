@@ -9,7 +9,7 @@ new Vue({
   },
   ready: function () {
     console.log(BMap);
-    window.init = this.getLocation;
+    this.getLocation();
   },
   methods: {
     //获取经纬度
