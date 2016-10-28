@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "6.3.x",
+    "npm": "3.10.x"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "^6.18.0",
@@ -12,8 +16,7 @@
     "gulp-watch": "^4.3.10"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "wanwan": "http-server -p 3000"
+    "start": "http-server -p 3000"
   },
   "repository": {
     "type": "git",
