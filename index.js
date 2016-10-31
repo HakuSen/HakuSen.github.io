@@ -6,7 +6,7 @@ new Vue({
       }, 
       'forecastWth': '', // 天气预测状况
       'forecastWeek': [],
-      'cityAddress':''
+      // 'cityAddress':''
   },
   ready: function () {
     // console.log(BMap);
@@ -48,17 +48,17 @@ new Vue({
           }
       },
     //获取城市
-    getMyaddress:function(lng,lat){
-      let url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng;
-      this.$http.get(url).then(res => {
-        console.log(res.body.results[0].address_components[5].long_name);
-        let city = res.body.results[0].address_components[5];
-        this.$set('cityAddress',city);
-      }).catch(err => {
-        console.log(err);
-      });
+    // getMyaddress:function(lng,lat){
+    //   let url = 'http://api.map.baidu.com/geocoder/v2/?ak=tydXTrIwWGmIGLAzUKry6zht5oOd4s8Y&callback=renderReverse&location='+lat+','+lng+'&output=json&pois=1';
+    //   this.$http.get(url).then(res => {
+    //     console.log(res);
+    //     // let city = res.body.results[0].address_components[5];
+    //     // this.$set('cityAddress',city);
+    //   }).catch(err => {
+    //     console.log(err);
+    //   });
 
-    },
+    // },
     // getLocation: function(){
     //   let _this = this;
     //   let geolocation = new BMap.Geolocation();
@@ -76,14 +76,15 @@ new Vue({
     // },
 
     // //获取城市名
-    // getMyaddress: function(lng,lat){
-    //   let point = new BMap.Point(lng,lat);
-    //   let geoc = new BMap.Geocoder();
-    //   geoc.getLocation(point,function(rs){
-    //     let addComp = rs.addressComponents;
-    //     document.getElementById('address').innerHTML = addComp.city;
-    //   });
-    // },
+    getMyaddress: function(lng,lat){
+      let point = new BMap.Point(lng,lat);
+      let geoc = new BMap.Geocoder();
+      geoc.getLocation(point,function(rs){
+        console.log(rs)
+        let addComp = rs.addressComponents;
+        document.getElementById('address').innerHTML = addComp.city;
+      });
+    },
 
     //当天天气状况
     getCurrentwth: function (lng,lat){

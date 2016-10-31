@@ -116,7 +116,7 @@
       </div>
       <div class="cur_state">
         <h3 class="state" id="state">{{ skyVal(currentWth.skycon)[0] }}</h3>
-        <p id="address">{{ cityAddress.long_name }}</p>
+        <p id="address"></p>
         <h1 class="temperature">{{ currentWth.temperature }}°</h1>
         <p class="state_forecast">{{ forecastWth.description }}</p>
       </div>
@@ -138,7 +138,7 @@
   </div>
   <script src="https://cdn.bootcss.com/vue/1.0.28/vue.min.js"></script>
   <script src="https://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
-  <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=m5VfddjUAHr0U80TwMz5GBt27co0BEmY"></script> -->
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=m5VfddjUAHr0U80TwMz5GBt27co0BEmY"></script>
   <script type="text/javascript" src="index.js"></script>
 </body>
 
