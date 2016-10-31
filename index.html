@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>weather_pro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_dlvmdcew8ftuik9.css">
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=m5VfddjUAHr0U80TwMz5GBt27co0BEmY"></script>
+
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_dlvmdcew8ftuik9.css">
   <style>
     body,html{
         padding: 0;
@@ -116,7 +116,7 @@
       </div>
       <div class="cur_state">
         <h3 class="state" id="state">{{ skyVal(currentWth.skycon)[0] }}</h3>
-        <p id="address">--</p>
+        <p id="address">{{ cityAddress.long_name }}</p>
         <h1 class="temperature">{{ currentWth.temperature }}°</h1>
         <p class="state_forecast">{{ forecastWth.description }}</p>
       </div>
@@ -136,9 +136,10 @@
       </ul>
     </div>
   </div>
-  <script src="//cdn.bootcss.com/vue/1.0.28/vue.min.js"></script>
-  <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
-  <script type="text/javascript" src="dist/index.js"></script>
+  <script src="http://cdn.bootcss.com/vue/1.0.28/vue.min.js"></script>
+  <script src="http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+  <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=m5VfddjUAHr0U80TwMz5GBt27co0BEmY"></script> -->
+  <script type="text/javascript" src="index.js"></script>
 </body>
 
 </html>

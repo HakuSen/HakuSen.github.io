@@ -5,40 +5,85 @@ new Vue({
         'temperature': '--'
       }, 
       'forecastWth': '', // 天气预测状况
-      'forecastWeek': []
+      'forecastWeek': [],
+      'cityAddress':''
   },
   ready: function () {
-    console.log(BMap);
+    // console.log(BMap);
     this.getLocation();
   },
   methods: {
     //获取经纬度
-   
     getLocation: function(){
-      let _this = this;
-      let geolocation = new BMap.Geolocation();
-      geolocation.getCurrentPosition(function(r){
-        if(this.getStatus() == 0){
-          console.log('您的位置：'+r.point.lng+','+r.point.lat);
-          _this.getMyaddress(r.point.lng,r.point.lat)
-          _this.getCurrentwth(r.point.lng,r.point.lat);
-          _this.getForecastrwth(r.point.lng,r.point.lat);
-        }
-        else {
-          alert('failed'+this.getStatus());
-        }        
-      },{enableHighAccuracy: true})
+      if(navigator.geolocation) {
+          var Options = { // 配置参数解释 官方文档链接 todo
+              enableHighAccuracy: true,
+              timeout:5000,
+              maximumAge:0
+          };
+          // 获取位置信息
+          navigator.geolocation.getCurrentPosition(this.handdleSuccess, this.handdleError, Options);
+          // 监视实时位置变化
+          var watcher_id = navigator.geolocation.watchPosition(this.handdleSuccess, this.handdleError, Options);
+          navigator.geolocation.clearWatch(watcher_id);
+      }
     },
-
-    //获取城市名
-    getMyaddress: function(lng,lat){
-      let point = new BMap.Point(lng,lat);
-      let geoc = new BMap.Geocoder();
-      geoc.getLocation(point,function(rs){
-        let addComp = rs.addressComponents;
-        document.getElementById('address').innerHTML = addComp.city;
+    
+      handdleSuccess: function (position) {
+          // 打印位置信息
+          console.log(position.coords.longitude,position.coords.latitude);
+          this.getCurrentwth(position.coords.longitude,position.coords.latitude);
+          this.getForecastrwth(position.coords.longitude,position.coords.latitude);
+          this.getMyaddress(position.coords.longitude,position.coords.latitude);
+      },
+      handdleError: function (error) {
+          switch(error.code) {
+              case error.TIMEOUT: console.log('超时');
+              break;
+              case error.PERMISSION_DENIED: console.log('用户拒绝提供地理位置');
+              break;
+              case error.POSITION_UNAVAILABLE: console.log('地理位置不可用');
+              break;
+              default: break;
+          }
+      },
+    //获取城市
+    getMyaddress:function(lng,lat){
+      let url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng;
+      this.$http.get(url).then(res => {
+        console.log(res.body.results[0].address_components[5].long_name);
+        let city = res.body.results[0].address_components[5];
+        this.$set('cityAddress',city);
+      }).catch(err => {
+        console.log(err);
       });
+
     },
+    // getLocation: function(){
+    //   let _this = this;
+    //   let geolocation = new BMap.Geolocation();
+    //   geolocation.getCurrentPosition(function(r){
+    //     if(this.getStatus() == 0){
+    //       console.log('您的位置：'+r.point.lng+','+r.point.lat);
+    //       _this.getMyaddress(r.point.lng,r.point.lat)
+    //       _this.getCurrentwth(r.point.lng,r.point.lat);
+    //       _this.getForecastrwth(r.point.lng,r.point.lat);
+    //     }
+    //     else {
+    //       alert('failed'+this.getStatus());
+    //     }        
+    //   },{enableHighAccuracy: true})
+    // },
+
+    // //获取城市名
+    // getMyaddress: function(lng,lat){
+    //   let point = new BMap.Point(lng,lat);
+    //   let geoc = new BMap.Geocoder();
+    //   geoc.getLocation(point,function(rs){
+    //     let addComp = rs.addressComponents;
+    //     document.getElementById('address').innerHTML = addComp.city;
+    //   });
+    // },
 
     //当天天气状况
     getCurrentwth: function (lng,lat){
